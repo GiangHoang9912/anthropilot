@@ -1,0 +1,112 @@
+{
+  "name": "anthropilot",
+  "displayName": "anthropilot",
+  "description": "anthropilot with langchain and REG to generate code",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.91.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "anthropilot.write_code",
+        "title": "Ask Anthopilot to Code"
+      },
+      {
+        "command": "anthropilot.analyze_code",
+        "title": "Ask Anthopilot to Analyze Code"
+      },
+      {
+        "command": "uploadCurrentFile.analyze",
+        "title": "Ask Anthopilot to Analyze",
+        "category": "Explorer"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "anthropilot.write_code",
+        "key": "ctrl+g",
+        "mac": "cmd+g",
+        "when": "editorTextFocus"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "anthropilot.write_code",
+          "group": "Anthopilot@1"
+        },
+        {
+          "command": "anthropilot.analyze_code",
+          "group": "Anthopilot@1"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "uploadCurrentFile.analyze",
+          "group": "Anthopilot"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Anthopilot",
+      "properties": {
+        "anthropilot.anthropic_api_key": {
+          "type": "string",
+          "default": "",
+          "description": "API Key for Anthopilot"
+        },
+        "anthropilot.open_ai_key": {
+          "type": "string",
+          "default": "",
+          "description": "API Key for GPT"
+        },
+        "anthropilot.model": {
+          "type": "string",
+          "default": "",
+          "description": "LLM Claude model name"
+        },
+        "anthropilot.api_base_url": {
+          "type": "string",
+          "default": "",
+          "description": "API url for Anthopilot"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/config": "^3.3.4",
+    "@types/markdown-it": "^14.1.1",
+    "@types/mocha": "^10.0.7",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.91.0",
+    "@typescript-eslint/eslint-plugin": "^7.14.1",
+    "@typescript-eslint/parser": "^7.11.0",
+    "@vscode/test-cli": "^0.0.9",
+    "@vscode/test-electron": "^2.4.0",
+    "eslint": "^8.57.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.4.5",
+    "webpack": "^5.92.1",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "config": "^3.3.12"
+  }
+}

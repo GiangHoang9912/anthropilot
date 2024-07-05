@@ -1,0 +1,14 @@
+**/node_modules
+**/dist
+**/build
+**/out
+
+__pycache__
+.vscode
+**/.vscode
+data
+
+.env
+**/.env
+
+**/config

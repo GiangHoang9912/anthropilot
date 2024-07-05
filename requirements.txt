@@ -1,0 +1,18 @@
+# ctransformers
+# transformers
+langchain
+langchain-community
+# torch
+pypdf
+# sentence-transformers
+gpt4all
+faiss-cpu
+openai
+langchain-anthropic
+flask
+flask-cors
+python-dotenv
+flask-s3
+boto3
+flask-mySQLdb
+gunicorn

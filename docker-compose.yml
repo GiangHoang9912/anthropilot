@@ -1,0 +1,31 @@
+version: "3.4"
+
+networks:
+  gateway:
+    driver: bridge
+
+volumes:
+  db-data:
+    driver: local
+
+services:
+  anthropilot:
+    image: anthropilot
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 5000:5000
+    networks:
+      - gateway
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.anthropilot.rule=Host(`chatdocs.gotechjsc.com`)"
+      - "traefik.http.routers.anthropilot.entrypoints=websecure"
+      - "traefik.http.routers.anthropilot.tls.certresolver=letsencrypt"
+      - "traefik.http.services.anthropilot.loadbalancer.server.port=5000"
+      # tls handshake
+      - "traefik.http.routers.anthropilot.tls=true"
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data
