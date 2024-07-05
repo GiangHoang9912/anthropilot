@@ -1,6 +1,10 @@
 {
   "name": "anthropilot",
   "displayName": "anthropilot",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GiangHoang9912/anthropilot"
+  },
   "description": "anthropilot with langchain and REG to generate code",
   "version": "0.0.1",
   "engines": {
