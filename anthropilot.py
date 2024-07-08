@@ -5,6 +5,7 @@ from typing import Any
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import GPT4AllEmbeddings
 from langchain_community.document_loaders import PyPDFLoader
+# from gpt4all import Embed4All
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_anthropic import ChatAnthropic
 from langchain_core.callbacks.base import BaseCallbackHandler
@@ -45,8 +46,7 @@ class Anthropilot:
     )
 
     self.embedding = GPT4AllEmbeddings(
-      client = None,
-      model_name = "all-MiniLM-L6-v2.gguf2.f16.gguf",
+      model_name = "nomic-embed-text-v1.f16.gguf"
     )
 
   def create_vector_db_from_text(self, raw_text, vector_db_path):
@@ -58,8 +58,7 @@ class Anthropilot:
     all_splits = text_splitter.split_text(raw_text)
 
     embedding = GPT4AllEmbeddings(
-      client = None,
-      model_name = "all-MiniLM-L6-v2.gguf2.f16.gguf",
+      model_name = "nomic-embed-text-v1.f16.gguf"
     )
 
     vector_store = FAISS.from_texts(texts=all_splits, embedding=embedding)
@@ -129,5 +128,4 @@ class Anthropilot:
       chain_type_kwargs={"prompt": prompt}
     )
     return qa_chain.stream({"query": question })
-
 

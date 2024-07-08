@@ -28,7 +28,6 @@ def chat():
         open_ai_key = data.get("open_ai_key", "")
         anthropic_api_key = data.get("anthropic_api_key", "")
         message = data.get("message", "")
-
         anthropilot = Anthropilot(
             open_ai_key=open_ai_key,
             anthropic_key=anthropic_api_key,
@@ -37,7 +36,8 @@ def chat():
         build_template = Message()
         workspace_name = workspace.split("/")[-1]
         workspace_db = "data/faiss_db/" + workspace_name
-        if not os.path.exists(workspace_db):
+
+        if os.path.exists(workspace_db) == False:
             code_files_content = []
             for root, dirs, files in os.walk(workspace):
                 for file in files:
@@ -52,12 +52,10 @@ def chat():
                             })
                         except Exception as e:
                             print(f"Error reading file {file_path}: {e}")
-            print(f"code_files_content: {code_files_content}\n\n")
 
             raw_text = ""
             for code_file in code_files_content:
                 raw_text += code_file['content']
-            print(f"raw_text: {raw_text}\n\n")
 
             anthropilot.create_vector_db_from_text(raw_text=raw_text, vector_db_path=workspace_db)
         template = build_template.get_message('template')
