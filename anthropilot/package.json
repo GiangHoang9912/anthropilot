@@ -1,12 +1,14 @@
 {
   "name": "anthropilot",
   "displayName": "anthropilot",
+  "publisher": "GiangHoang9912",
   "repository": {
     "type": "git",
     "url": "https://github.com/GiangHoang9912/anthropilot"
   },
+  "icon": "images/logo.png",
   "description": "anthropilot with langchain and REG to generate code",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "engines": {
     "vscode": "^1.91.0"
   },

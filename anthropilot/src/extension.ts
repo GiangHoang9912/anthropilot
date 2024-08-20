@@ -55,7 +55,6 @@ async function askAnthropilotToAnalyzeCode(resolve: any) {
 
 async function WriteCodeByAnthropilot() {
 	const editor = vscode.window.activeTextEditor;
-	console.log(editor)
 	if (editor) {
 		const selection = editor.selection;
 		const newPosition = selection.active.with(selection.end.line + 1);
@@ -64,9 +63,27 @@ async function WriteCodeByAnthropilot() {
 
 		const fileExtension = editor.document.fileName.split('.').pop();
 		const res = await anthropilot.invoke(text + ", Provide response as code in " + fileExtension + ". Just code, do not give any additional text", workspacePath);
-		editor.edit(editBuilder => {
-			editBuilder.insert(newPosition, '\n' + res.replace(/```/g, '') + '\n');
-		});
+
+		// Thay vì chèn trực tiếp, tạo một CompletionItem
+		const completionItem = new vscode.CompletionItem(res.replace(/```/g, ''));
+		completionItem.insertText = new vscode.SnippetString('\n' + res.replace(/```/g, '') + '\n');
+		completionItem.range = new vscode.Range(newPosition, newPosition);
+
+		// Đăng ký provider cho completion
+		const provider = vscode.languages.registerCompletionItemProvider(
+			{ scheme: 'file', language: fileExtension },
+			{
+				provideCompletionItems(document, position) {
+					if (position.isEqual(newPosition)) {
+						return [completionItem];
+					}
+				}
+			},
+			'\t' // Trigger suggestion on Tab key
+		);
+
+		// Đảm bảo hủy đăng ký provider sau một khoảng thời gian
+		setTimeout(() => provider.dispose(), 10000); // Hủy sau 10 giây
 	}
 }
 

@@ -32,9 +32,7 @@ export class Anthropilot {
       anthropic_api_key: this.anthropic_api_key,
       message: message
     };
-    console.log("config", config);
     const response = await axios.post(this.api_base_url, config);
-    console.log("response", response);
     return response.data as string;
   }
 }
